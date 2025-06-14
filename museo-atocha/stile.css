@@ -1,0 +1,19 @@
+.tilt {
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.tilt:hover {
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+}
+
+.tilt img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}

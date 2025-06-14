@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Mexico y Sus Culturas.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;700&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(145deg, #0d1117, #161b22);
+            color: #fff;
+            font-family: 'Merriweather', serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 60px;
+            padding: 40px;
+        }
+
+        .contenedor-principal {
+            display: flex;
+            gap: 60px;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .bloque {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            width: 380px;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+
+        .image-container {
+            position: relative;
+            width: 230px;
+            height: 320px;
+            overflow: hidden;
+            border-radius: 12px;
+            cursor: pointer;
+            perspective: 900px;
+            flex-shrink: 0;
+            transition: transform 0.4s ease;
+        }
+
+        .image-front {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+            transform-origin: center bottom;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.65) 40%, transparent 80%);
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            pointer-events: none;
+        }
+
+        .image-behind {
+            position: absolute;
+            bottom: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transform: scale(1.05);
+            transition: bottom 0.6s ease, opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .image-container:hover .image-front {
+            transform: rotateX(22deg) scale(1.03);
+        }
+
+        .image-container:hover .overlay {
+            opacity: 1;
+        }
+
+        .image-container:hover .image-behind {
+            bottom: 0;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .info-cards {
+            max-width: 150px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            pointer-events: none;
+            line-height: 1.5;
+        }
+
+        .card {
+            background: #1e2228;
+            border-left: 4px solid #00c896;
+            padding: 12px 14px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease;
+            font-size: 13px;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+        }
+
+        .card h3 {
+            margin-bottom: 6px;
+            font-size: 15px;
+            color: #00ffd0;
+        }
+
+        .card p {
+            color: #ccc;
+        }
+
+        .bloque:hover {
+            transform: scale(1.04);
+        }
+
+        .bloque:hover .info-cards {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+
+        @media (max-width: 1000px) {
+            body {
+                padding: 20px;
+            }
+
+            .contenedor-principal {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 40px;
+            }
+
+            .bloque {
+                width: 90%;
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+                transform: none !important;
+            }
+
+            .info-cards {
+                position: static;
+                opacity: 1 !important;
+                transform: translateX(0) !important;
+                pointer-events: auto !important;
+                max-width: 100%;
+                margin-top: 20px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="contenedor-principal">
+
+        <!-- Bloque Izquierdo -->
+        <div class="bloque izquierda">
+            <div class="image-container">
+                <img src="IMAGENES/Foto1.jpg" alt="Imagen frontal 1" class="image-front" />
+                <div class="overlay"></div>
+                <img src="IMAGENES/Foto2.jpg" alt="Imagen trasera 1" class="image-behind" />
+            </div>
+            <div class="info-cards">
+                <div class="card">
+                    <h3>Cultura: Maya</h3>
+                    <p>Una de las civilizaciones más influyentes de Mesoamérica, destacada por su arquitectura,
+                        astronomía y escritura jeroglífica.</p>
+                </div>
+                <div class="card">
+                    <h3>Estados:</h3>
+                    <p>Yucatán, Quintana Roo, Campeche, Chiapas y Tabasco.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bloque Centro -->
+        <div class="bloque medio">
+            <div class="image-container">
+                <img src="IMAGENES/Foto4.jpg" alt="Imagen frontal 2" class="image-front" />
+                <div class="overlay"></div>
+                <img src="IMAGENES/Foto3.jpg" alt="Imagen trasera 2" class="image-behind" />
+            </div>
+            <div class="info-cards">
+                <div class="card">
+                    <h3>Cultura: Olmeca</h3>
+                    <p>Considerada la cultura madre de Mesoamérica, famosa por sus colosales cabezas de piedra y su
+                        influencia en otras civilizaciones.</p>
+                </div>
+                <div class="card">
+                    <h3>Ubicación:</h3>
+                    <p>Principalmente en los actuales estados de Veracruz y Tabasco.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bloque Derecho: Cultura Zapoteca -->
+        <div class="bloque derecha">
+            <div class="image-container">
+                <img src="IMAGENES/Foto5.jpg" alt="Imagen frontal 3" class="image-front" />
+                <div class="overlay"></div>
+                <img src="IMAGENES/Foto6.jpg" alt="Imagen trasera 3" class="image-behind" />
+            </div>
+            <div class="info-cards">
+                <div class="card">
+                    <h3>Cultura: Zapoteca</h3>
+                    <p>Ubicada en el actual Oaxaca, se destacó por su arquitectura monumental como Monte Albán y su
+                        sistema de escritura temprana.</p>
+                </div>
+                <div class="card">
+                    <h3>Contribuciones:</h3>
+                    <p>Legaron obras maestras de arte funerario, complejos urbanos elevados y sistemas agrícolas en
+                        terrazas.</p>
+                </div>
+            </div>
+        </div>
+
+</body>
+
+</html>

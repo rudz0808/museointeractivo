@@ -1,0 +1,11 @@
+.main-container {
+  display: flex;
+  gap: 40px;
+  align-items: center; /* Centrar verticalmente */
+  justify-content: center; /* Centrar horizontalmente */
+  flex-wrap: wrap;
+}
+
+.image-front, .image-behind {
+  object-position: center; /* Centrar la imagen dentro del contenedor */
+}

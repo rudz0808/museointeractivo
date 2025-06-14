@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Galeria De Comida De Mexico.</title>
+  <style>
+    :root {
+      --card-width: 200px;
+      --card-height: 320px;
+      --carousel-radius: 420px;
+      --animation-duration: 20s;
+    }
+
+    body {
+      margin: 0;
+      background: 
+        linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+        url('https://images.unsplash.com/photo-1550317138-10000687a72b?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+      background-size: cover;
+      overflow: hidden;
+      font-family: 'Georgia', serif;
+      color: #fff;
+    }
+
+    .carousel-container {
+      perspective: 1500px;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .carousel {
+      width: var(--card-width);
+      height: var(--card-height);
+      position: relative;
+      transform-style: preserve-3d;
+      animation: spin var(--animation-duration) linear infinite;
+      transition: transform 1s ease;
+    }
+
+    .carousel.paused {
+      animation-play-state: paused;
+    }
+
+    .card {
+      position: absolute;
+      width: var(--card-width);
+      height: var(--card-height);
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow:
+        0 4px 8px rgba(0,0,0,0.3),
+        0 0 15px rgba(23, 156, 212, 0.8);
+      transform-origin: center center;
+      cursor: pointer;
+      transition: transform 0.3s, background-color 0.5s, color 0.5s;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(22, 156, 212, 0.8);
+      color: #367eeb;
+    }
+
+    .card img {
+      width: 100%;
+      height: 85%;
+      object-fit: cover;
+      border-bottom: 2px solid rgba(170, 180, 177, 0.6);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .card .label {
+      height: 15%;
+      text-align: center;
+      font-family: 'Georgia', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: inherit;
+      text-shadow:
+        2px 2px 5px rgba(0,0,0,0.8),
+        0 0 10px rgba(224, 49, 111, 0.9);
+      padding: 5px 10px;
+      user-select: none;
+      transition: color 0.5s, text-shadow 0.5s;
+    }
+
+    @keyframes glow {
+      0%, 100% {
+        color: rgb(224, 49, 111, 0.9);
+        text-shadow:
+          0 0 10px white,
+          0 0 20px white,
+          0 0 30px white;
+      }
+      50% {
+        color: black;
+        text-shadow: none;
+      }
+    }
+
+    .card.selected {
+      z-index: 10;
+      background-color: black !important;
+      color: rgb(47, 211, 232);
+      box-shadow:
+        0 0 20px 5px rgba(255, 21, 0, 0.9),
+        0 0 40px 10px rgb(255, 50, 238);
+    }
+
+    .card.selected .label {
+      animation: glow 2s ease-in-out infinite;
+      color: rgb(151, 23, 165);
+      text-shadow:
+        0 0 10px rgb(217, 27, 27),
+        0 0 20px rgb(122, 20, 134);
+    }
+
+    .card .number-label {
+      position: absolute;
+      top: 8px;
+      left: 10px;
+      font-family: 'Georgia', serif;
+      font-weight: 900;
+      font-size: 1.4rem;
+      color: #b921d7;
+      text-shadow:
+        1px 1px 3px rgba(0,0,0,0.8);
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .info-panel {
+      position: fixed;
+      top: 50%;
+      right: 50px;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.8);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.7);
+      display: none;
+      max-width: 300px;
+      font-family: 'Georgia', serif;
+      color: rgb(208, 17, 164);
+      text-align: center;
+    }
+
+    .info-panel.visible {
+      display: block;
+    }
+
+    /* Texto estático sin animación de glow en info panel */
+    .info-panel.visible h2,
+    .info-panel.visible h4,
+    .info-panel.visible p {
+      animation: none;
+      font-weight: 900;
+      color: rgb(235, 38, 202);
+      text-shadow:
+        0 0 5px rgba(204, 35, 92, 0.8);
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotateY(0deg);
+      }
+      to {
+        transform: rotateY(360deg);
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .info-panel {
+        bottom: 20px;
+        top: auto;
+        right: 50%;
+        transform: translateX(50%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="carousel-container">
+    <div class="carousel" id="carousel"></div>
+  </div>
+  <div class="info-panel" id="infoPanel">
+    <h2 id="infoTitle"></h2>
+    <h4 id="infoState"></h4>
+    <p id="infoDesc"></p>
+  </div>
+
+  <script>
+    const items = [
+      { title: "Tacos al Pastor", img: "IMAGENES/Platillo1.jpg", state: "CDMX", desc: "Se preparan con carne adobada en trompo y se sirven con piña y cilantro." },
+      { title: "Tamales", img: "IMAGENES/Platillo2.jpg", state: "Oaxaca", desc: "Elaborados con masa de maíz rellena y envuelta en hoja de maíz." },
+      { title: "Pozole", img: "IMAGENES/Platillo3.jpg", state: "Guerrero", desc: "Sopa tradicional con maíz cacahuazintle y carne." },
+      { title: "Chiles en Nogada", img: "IMAGENES/Platillo4.jpg", state: "Puebla", desc: "Chile poblano relleno cubierto con salsa de nuez, granada y perejil." },
+      { title: "Quesadillas de Flor", img: "IMAGENES/Platillo5.jpg", state: "CDMX", desc: "Tortillas rellenas de flor de calabaza con queso." },
+      { title: "Cochinita Pibil", img: "IMAGENES/Platillo6.jpg", state: "Yucatán", desc: "Carne de cerdo adobada en achiote, cocida en horno bajo tierra." },
+      { title: "Enchiladas Verdes", img: "IMAGENES/Platillo7.jpg", state: "San Luis Potosí", desc: "Tortillas rellenas bañadas en salsa verde y crema." },
+      { title: "Tlayudas", img: "IMAGENES/Platillo8.jpg", state: "Oaxaca", desc: "Tortilla grande con asiento, frijol, carne y vegetales." },
+      { title: "Sopes", img: "IMAGENES/Platillo9.jpg", state: "México", desc: "Base gruesa de masa con frijoles, carne, lechuga y queso." },
+      { title: "Molletes", img: "IMAGENES/Platillo10.jpg", state: "CDMX", desc: "Pan con frijoles refritos y queso gratinado." },
+      { title: "Tortas Ahogadas", img: "IMAGENES/Platillo11.jpg", state: "Jalisco", desc: "Birote salado relleno de carnitas y bañado en salsa picante." },
+      { title: "Gorditas", img: "IMAGENES/Platillo12.jpg", state: "Zacatecas", desc: "Masa de maíz rellena de chicharrón, frijoles u otros guisos." },
+    ];
+
+    const carousel = document.getElementById("carousel");
+    const infoPanel = document.getElementById("infoPanel");
+    const infoTitle = document.getElementById("infoTitle");
+    const infoState = document.getElementById("infoState");
+    const infoDesc = document.getElementById("infoDesc");
+
+    let selectedCard = null;
+    let timeout = null;
+
+    function createCarousel() {
+      const angle = 360 / items.length;
+
+      items.forEach((item, i) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.style.transform = `rotateY(${i * angle}deg) translateZ(var(--carousel-radius))`;
+
+        card.innerHTML = `
+          <div class="number-label">${i + 1}</div>
+          <img src="${item.img}" alt="${item.title}" />
+          <div class="label">${item.title}</div>
+        `;
+
+        card.addEventListener("click", () => {
+          if (selectedCard === card) {
+            card.style.transform = `rotateY(${i * angle}deg) translateZ(var(--carousel-radius))`;
+            card.classList.remove("selected");
+            carousel.classList.remove("paused");
+            infoPanel.classList.remove("visible");
+            selectedCard = null;
+            clearTimeout(timeout);
+            return;
+          }
+
+          clearTimeout(timeout);
+
+          document.querySelectorAll('.card').forEach((c, idx) => {
+            c.classList.remove('selected');
+            c.style.transform = `rotateY(${idx * angle}deg) translateZ(var(--carousel-radius))`;
+          });
+
+          card.style.transform = `rotateY(${i * angle}deg) translateZ(calc(var(--carousel-radius) + 80px)) scale(1.3)`;
+          card.classList.add("selected");
+          carousel.classList.add("paused");
+          selectedCard = card;
+
+          infoPanel.classList.add("visible");
+          infoTitle.textContent = item.title;
+          infoState.textContent = `Estado: ${item.state}`;
+          infoDesc.textContent = item.desc;
+
+          timeout = setTimeout(() => {
+            card.style.transform = `rotateY(${i * angle}deg) translateZ(var(--carousel-radius))`;
+            card.classList.remove("selected");
+            infoPanel.classList.remove("visible");
+            carousel.classList.remove("paused");
+            selectedCard = null;
+          }, 10000);
+        });
+
+        carousel.appendChild(card);
+      });
+    }
+
+    createCarousel();
+  </script>
+</body>
+</html>

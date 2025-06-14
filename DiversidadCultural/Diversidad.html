@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Diversidad Cultural</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Lora&family=Playfair+Display&display=swap" rel="stylesheet" />
+  <style>
+    /* Reset básico */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Lora', serif;
+      background: #fff8e7;
+      color: #3b2f2f;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Contenedor general */
+    .page-container {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      position: relative;
+      background: white;
+      box-shadow: 0 0 30px rgba(0,0,0,0.1);
+      min-height: 100vh;
+      margin: 0 0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    /* Márgenes laterales con el tricolor México: verde - blanco - rojo */
+    .side-margin {
+      width: 80px; /* ancho total de margen lateral */
+      display: flex;
+      flex-direction: column;
+      justify-content: stretch;
+      position: relative;
+      z-index: 10;
+      overflow: hidden;
+    }
+
+    /* Cada franja dentro del margen lateral */
+    .side-margin .stripe {
+      flex: 1; /* que las 3 franjas ocupen lo mismo */
+    }
+
+    /* Margen izquierdo: verde - blanco - rojo */
+    .side-margin.left {
+      /* Para margen izquierdo, ponemos las franjas de arriba a abajo, pero como queremos franjas verticales, las rotamos */
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      display: flex;
+      flex-direction: row;
+      width: 80px;
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      box-shadow: inset 5px 0 20px rgba(0,0,0,0.1);
+    }
+    .side-margin.left .stripe.verde {
+      background-color: #006400;
+      flex: 1;
+      position: relative;
+      background-image: url('imagenes/verde-lateral.jpg'); /* imagen verde lateral, cambia la ruta */
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.7);
+    }
+    .side-margin.left .stripe.blanco {
+      background-color: white;
+      flex: 1;
+    }
+    .side-margin.left .stripe.rojo {
+      background-color: #d72631;
+      flex: 1;
+      position: relative;
+      background-image: url('imagenes/rojo-lateral.jpg'); /* imagen rojo lateral, cambia la ruta */
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.7);
+    }
+
+    /* Margen derecho: igual que el izquierdo pero invertido (rojo - blanco - verde) */
+    .side-margin.right {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      display: flex;
+      flex-direction: row;
+      width: 80px;
+      height: 100vh;
+      position: fixed;
+      right: 0;
+      top: 0;
+      box-shadow: inset -5px 0 20px rgba(0,0,0,0.1);
+    }
+    .side-margin.right .stripe.rojo {
+      background-color: #d72631;
+      flex: 1;
+      position: relative;
+      background-image: url('imagenes/rojo-lateral.jpg'); /* misma imagen rojo */
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.7);
+    }
+    .side-margin.right .stripe.blanco {
+      background-color: white;
+      flex: 1;
+    }
+    .side-margin.right .stripe.verde {
+      background-color: #006400;
+      flex: 1;
+      position: relative;
+      background-image: url('imagenes/verde-lateral.jpg'); /* misma imagen verde */
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.7);
+    }
+
+    /* Contenido central con margen para no tapar los bordes */
+    .content-wrapper {
+      flex: 1;
+      padding: 40px 60px;
+      max-width: 100%;
+      margin: 0 80px; /* para dejar espacio a las franjas */
+      overflow-y: auto;
+      position: relative;
+      z-index: 20;
+      background: white;
+      border-radius: 0 10px 10px 0;
+    }
+
+    header {
+      background: url('imagenes/cultura-fondo.jpg') no-repeat center center/cover;
+      color: white;
+      text-align: center;
+      padding: 90px 20px;
+      font-family: 'Cinzel', serif;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+      border-radius: 10px;
+      margin-bottom: 50px;
+    }
+
+    header h1 {
+      font-size: 3.8em;
+      margin: 0;
+      text-shadow: 2px 2px 6px #000;
+    }
+
+    header p {
+      font-size: 1.5em;
+      margin-top: 15px;
+      background-color: rgba(0, 0, 0, 0.55);
+      display: inline-block;
+      padding: 15px 25px;
+      border-radius: 12px;
+    }
+
+    .section {
+      padding-bottom: 50px;
+      border-bottom: 2px solid #d72631;
+      margin-bottom: 50px;
+    }
+
+    .section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+
+    .section h2 {
+      font-size: 2.8em;
+      margin-bottom: 25px;
+      color: #d72631;
+      font-family: 'Playfair Display', serif;
+      border-left: 12px solid #006400;
+      padding-left: 20px;
+    }
+
+    .section p {
+      font-size: 1.3em;
+      line-height: 1.8em;
+      text-align: justify;
+      max-width: 900px;
+      margin: auto;
+      margin-bottom: 35px;
+      color: #3b2f2fdd;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+      margin-top: 10px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .image-box {
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      overflow: hidden;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .image-box:hover {
+      transform: scale(1.07);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+    }
+
+    .image-box img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .caption {
+      padding: 15px 20px;
+      font-style: italic;
+      color: #555;
+      font-size: 1em;
+      background: #f9f9f9;
+      border-top: 1px solid #eee;
+      text-align: center;
+    }
+
+    footer {
+      background-color: #006400;
+      color: white;
+      text-align: center;
+      padding: 30px;
+      font-size: 1em;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.05em;
+      margin-top: 60px;
+      border-radius: 0 0 10px 10px;
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2.5em;
+      }
+      header p {
+        font-size: 1.1em;
+        padding: 10px 15px;
+      }
+      .section h2 {
+        font-size: 2em;
+        padding-left: 15px;
+      }
+      .section p {
+        font-size: 1.1em;
+      }
+      .image-box img {
+        height: 180px;
+      }
+      /* Ocultar márgenes para móvil */
+      .side-margin {
+        display: none;
+      }
+      .content-wrapper {
+        margin: 0 20px;
+        padding: 20px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="side-margin left">
+    <div class="stripe verde"></div>
+    <div class="stripe blanco"></div>
+    <div class="stripe rojo"></div>
+  </div>
+  <div class="side-margin right">
+    <div class="stripe rojo"></div>
+    <div class="stripe blanco"></div>
+    <div class="stripe verde"></div>
+  </div>
+
+  <div class="page-container">
+    <div class="content-wrapper">
+      <header>
+        <h1>🌺 Diversidad Cultural de México 🌎</h1>
+        <p>Colores, lenguas, rituales y raíces que siguen latiendo en cada rincón del país</p>
+      </header>
+
+      <div class="section">
+        <h2>🧭 México: un mosaico cultural</h2>
+        <p>
+          México es un país con una diversidad cultural impresionante, hogar de más de 60 pueblos originarios reconocidos oficialmente. Cada uno tiene su propia lengua, tradiciones, vestimenta y formas de vida que reflejan una historia milenaria. 
+          Desde los mayas en el sureste, los nahuas en el centro, hasta los rarámuris en el norte, esta pluralidad es un mosaico de colores, sonidos y saberes que enriquece la identidad nacional.
+        </p>
+        <p>
+          Esta riqueza cultural se manifiesta en la música, las danzas tradicionales, la gastronomía regional, la artesanía y las celebraciones comunitarias que no solo preservan el pasado sino que dan sentido al presente y proyectan un futuro lleno de orgullo y continuidad.
+        </p>
+        <div class="gallery">
+          <div class="image-box">
+            <img src="imagenes/danza-venado.jpg" alt="Danza tradicional mexicana" />
+            <div class="caption">Danza del venado: fuerza, conexión y respeto a la naturaleza</div>
+          </div>
+          <div class="image-box">
+            <img src="imagenes/codices.jpg" alt="Códices prehispánicos" />
+            <div class="caption">Códices que narran la historia ancestral de los pueblos originarios</div>
+          </div>
+          <div class="image-box">
+            <img src="imagenes/artesania.jpg" alt="Artesanía mexicana" />
+            <div class="caption">Artesanía con detalles que cuentan la historia de cada comunidad</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>🎉 Tradiciones que mantienen viva la identidad</h2>
+        <p>
+          Las tradiciones mexicanas son un puente entre el pasado y el presente. Celebraciones como el Día de Muertos combinan rituales indígenas con influencias coloniales, creando una expresión única de respeto y alegría por la memoria de los ancestros.
+        </p>
+        <p>
+          La vestimenta típica de cada región es otro símbolo de identidad, confeccionada a mano con técnicas ancestrales y motivos que hablan del vínculo con la tierra, la fauna y la cosmovisión de cada pueblo.
+        </p>
+        <div class="gallery">
+          <div class="image-box">
+            <img src="imagenes/dia-muertos.jpg" alt="Altar de Día de Muertos" />
+            <div class="caption">Altar tradicional que honra a los seres queridos</div>
+          </div>
+          <div class="image-box">
+            <img src="imagenes/vestimenta-tipica.jpg" alt="Vestimenta típica mexicana" />
+            <div class="caption">Vestimenta con bordados que reflejan historias y símbolos ancestrales</div>
+          </div>
+          <div class="image-box">
+            <img src="imagenes/fiesta-pueblo.jpg" alt="Fiesta tradicional mexicana" />
+            <div class="caption">Fiestas comunitarias llenas de música, color y vida</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>🍽️ Gastronomía: sabores que narran historias</h2>
+        <p>
+          La cocina mexicana es Patrimonio Cultural Inmaterial de la Humanidad por la UNESCO. Sus ingredientes como el maíz, chile, frijol y cacao se han cultivado y transformado durante miles de años, resultando en platillos únicos y regionales.
+        </p>
+        <p>
+          Platillos como el mole poblano, las tlayudas o el pozole, así como bebidas tradicionales como el pulque o el mezcal, son muestras vivas de la mezcla entre tradiciones indígenas y aportaciones españolas, creando sabores que cuentan la historia de México.
+        </p>
+        <div class="gallery">
+          <div class="image-box">
+            <img src="imagenes/mole.jpg" alt="Mole poblano" />
+            <div class="caption">Mole poblano, un platillo que une sabor y tradición</div>
+          </div>
+          <div class="image-box">
+            <img src="imagenes/tlayuda.jpg" alt="Tlayuda oaxaqueña" />
+            <div class="caption">Tlayuda, el sabor auténtico de Oaxaca</div>
+          </div>
+          <div class="image-box">
+            <img src="imagenes/mezcal.jpg" alt="Mezcal artesanal" />
+            <div class="caption">Mezcal: tradición y destreza en cada gota</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>📚 Lenguas originarias y saberes ancestrales</h2>
+        <p>
+          México es el país con la mayor diversidad lingüística en América Latina, con más de 68 lenguas indígenas y numerosas variantes dialectales. Estos idiomas son vehículos de cosmovisiones, historias, conocimientos medicinales y formas únicas de entender el mundo.
+        </p>
+        <p>
+          La revitalización y preservación de estas lenguas es fundamental para mantener viva la diversidad cultural y garantizar que las nuevas generaciones puedan heredar esta riqueza intangible que va mucho más allá de las palabras.
+        </p>
+      </div>
+
+      <footer>
+        Museo Virtual © 2025 • Elaborado con ❤️ para celebrar la riqueza cultural de México
+      </footer>
+    </div>
+  </div>
+</body>
+</html>

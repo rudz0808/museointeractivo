@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Costumbres Mexicanas</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fdfdfd;
+      color: #333;
+    }
+
+    header {
+      background-color: #8b0000;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    nav a {
+      color: white;
+      margin-left: 1.5rem;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .hero {
+      background: url('imagenes/dia-de-muertos.jpg') center/cover no-repeat;
+      height: 50vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-shadow: 2px 2px 5px black;
+      text-align: center;
+    }
+
+    .hero h2 {
+      font-size: 2.5rem;
+      padding: 1rem;
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 8px;
+    }
+
+    .section {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .galeria {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .item {
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .item img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .item h3 {
+      margin-top: 0.5rem;
+    }
+
+    .item p {
+      font-size: 0.95rem;
+    }
+
+    footer {
+      background: #8b0000;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Museo de Costumbres Mexicanas</h1>
+    <nav>
+      <a href="#galeria">Costumbres</a>
+      <a href="#acerca">Acerca</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Explora las tradiciones De México</h2>
+  </section>
+
+  <section class="section" id="galeria">
+    <h2>Galería de Costumbres</h2>
+    <div class="galeria">
+      <div class="item">
+        <img src="imagenes/dia-muerto.png" alt="Día de Muertos">
+        <h3>Día de Muertos</h3>
+        <p>Una de las tradiciones más emblemáticas, donde se honra la memoria de los difuntos con altares, flores,
+          comida y velas.</p>
+      </div>
+      <div class="item">
+        <img src="imagenes/guelaguetza.jpg" alt="Guelaguetza">
+        <h3>La Guelaguetza</h3>
+        <p>Festival tradicional de Oaxaca que celebra la cultura indígena con danzas, trajes típicos y ofrendas
+          comunitarias.</p>
+      </div>
+      <div class="item">
+        <img src="imagenes/Nose.jpg" alt="Mariachi">
+        <h3>Mariachi</h3>
+        <p>Un símbolo musical de México, presente en celebraciones familiares, fiestas patrias y eventos religiosos.</p>
+      </div>
+      <div class="item">
+        <img src="./imagenes/si.jpg" alt="Posadas">
+        <h3>Posadas Navideñas</h3>
+        <p>Celebraciones previas a la Navidad que representan el peregrinaje de María y José, con villancicos y piñatas.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="acerca">
+    <h2>Acerca del Museo</h2>
+    <p>Este museo virtual fue creado con el objetivo de una tarea Y Presentar las costumbres Mexicanas</p>
+  </section>
+
+  <footer>
+    &copy; 2025 Museo de Costumbres Mexicanas
+  </footer>
+
+</body>
+
+</html>
